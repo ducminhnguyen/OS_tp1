@@ -1,0 +1,3 @@
+#!/usr/sbin/dtrace -s
+pid$1:::entry
+{ @syscalls[probefunc]=count(); }

@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+  pid_t ret;
+  char *name;
+  ret = fork();
+  
+  if (ret == 0) { /* Child */
+    name = "child";
+    sleep(20);
+  } else if (ret == -1) {
+    printf("Cannot create process");
+    return -1;
+  } else {
+    name = "parent";
+
+
+    sleep(2);
+  }
+
+//  name[1] = 'o';
+
+  printf("process %s ret  = %ld\n", name, ret);
+  return 0;
+}
