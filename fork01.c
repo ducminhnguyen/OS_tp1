@@ -60,14 +60,17 @@ struct sigaction sa;
 
 int main()
 {
-	pid_t* childProcessArr = new pid_t[3];
-	printf("Parent");
+	pid_t* childProcessArr;
+	childProcessArr= (pid_t*)malloc(sizeof(pid_t)*3);
+	int isRoot = 1;
+	printf("Parent\n");
 	int i = 0;
 	for (i = 0; i< 3; ++i) 
 	{
 			childProcessArr[i] = fork();
 			if (childProcessArr[i] == 0)
 			{
+				isRoot = 0;
 				break;
 			} 
 			else
@@ -75,13 +78,14 @@ int main()
 				printf("process %s ret  = %ld\n", "child", childProcessArr[i]);
 			}
 	}
-
-	pid_t* childChildProcessArr = new pid_t[2];
+	if (isRoot == 1 || i == 1) {sleep(200);return 0;}
+	pid_t* childChildProcessArr = (pid_t*)malloc(sizeof(pid_t)*2);
 	for (i = 0; i< 2; ++i) 
 	{
 			childChildProcessArr[i] = fork();
-			if (childChildProcessArr[i] == 0) 
+			if (childChildProcessArr[i] == 0)
 			{
+				printf("In Child CHild");
 				break;
 			}
 			else 
@@ -89,7 +93,7 @@ int main()
 				printf("process %s ret  = %ld\n", "grandchild", childChildProcessArr[i]);
 			}
 	}
-	
+	sleep(200);	
 	return 0;
 }
 
